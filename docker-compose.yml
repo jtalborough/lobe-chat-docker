@@ -9,7 +9,7 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - ACCESS_CODE=${ACCESS_CODE}
 
-  loudflared:
+  cloudflared-lobechat:
     image: cloudflare/cloudflared:latest
     container_name: cloudflared-tunnel-lobechat
     restart: always
