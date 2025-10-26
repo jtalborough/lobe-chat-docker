@@ -9,9 +9,9 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - ACCESS_CODE=${ACCESS_CODE}
 
-  cloudflared:
+  loudflared:
     image: cloudflare/cloudflared:latest
-    container_name: cloudflared-tunnel
+    container_name: cloudflared-tunnel-lobechat
     restart: always
     command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
     depends_on:
