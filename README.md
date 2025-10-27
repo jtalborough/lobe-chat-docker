@@ -15,11 +15,25 @@ This repository contains a `docker-compose.yml` file to deploy LobeChat using Po
 
 Before deploying, you will need to provide your secrets as environment variables in the Portainer UI.
 
-When deploying the stack:
-1.  Navigate to the "Environment variables" section.
-2.  Click "Add environment variable" for each of the following secrets:
-    -   `OPENAI_API_KEY`: Your OpenAI API key.
-    -   `ACCESS_CODE`: A secure password to protect your LobeChat instance.
-    -   `CLOUDFLARE_TUNNEL_TOKEN`: Your Cloudflare Tunnel token.
-3.  Enter the name of the variable and paste its value.
-4.  Deploy the stack. Portainer will securely inject these values into the containers.
+When deploying the stack, navigate to the **Environment variables** section and add the following variables. Portainer will securely inject these values into the containers.
+
+### Required Variables
+
+-   `OPENAI_API_KEY`: Your OpenAI API key.
+-   `CLOUDFLARE_TUNNEL_TOKEN`: Your Cloudflare Tunnel token.
+-   `POSTGRES_PASSWORD`: A strong, unique password for the PostgreSQL database.
+-   `KEY_VAULTS_SECRET`: A long, random, and secret string for encrypting credentials. You can generate one with `openssl rand -base64 32`.
+-   `NEXT_AUTH_SECRET`: A long, random, and secret string for NextAuth. You can generate one with `openssl rand -hex 32`.
+
+### SSO Provider Variables
+
+You must configure at least one SSO provider.
+
+-   `NEXT_AUTH_SSO_PROVIDERS`: A comma-separated list of the providers you want to enable (e.g., `github`, `google`).
+
+#### Example: GitHub SSO
+
+If you use GitHub, you need to provide the following:
+
+-   `AUTH_GITHUB_ID`: Your GitHub OAuth App's Client ID.
+-   `AUTH_GITHUB_SECRET`: Your GitHub OAuth App's Client Secret.
