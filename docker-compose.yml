@@ -26,6 +26,11 @@ services:
       - AUTH_GITHUB_ID=${AUTH_GITHUB_ID}
       - AUTH_GITHUB_SECRET=${AUTH_GITHUB_SECRET}
 
+      # --- Access Control (Optional) ---
+      # A comma-separated list of codes to restrict access. 
+      # If set, new users will be prompted for a code on their first login.
+      - ACCESS_CODES=${ACCESS_CODES}
+
       # S3 Storage (placeholders to prevent startup error if not used)
       - S3_ACCESS_KEY_ID=placeholder
       - S3_SECRET_ACCESS_KEY=placeholder
