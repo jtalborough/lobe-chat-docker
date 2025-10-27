@@ -15,7 +15,7 @@ This repository contains a `docker-compose.yml` file to deploy LobeChat using Po
 
 Before deploying, you will need to provide your secrets as environment variables in the Portainer UI.
 
-When deploying the stack, navigate to the **Environment variables** section and add the following variables. Portainer will securely inject these values into the containers.
+Refer to the `.env.example` file for a complete list of required and optional environment variables. When deploying the stack, navigate to the **Environment variables** section in the Portainer UI and add the variables you need.
 
 ### Required Variables
 
@@ -37,3 +37,13 @@ If you use GitHub, you need to provide the following:
 
 -   `AUTH_GITHUB_ID`: Your GitHub OAuth App's Client ID.
 -   `AUTH_GITHUB_SECRET`: Your GitHub OAuth App's Client Secret.
+
+### Optional: S3 Object Storage
+
+These variables are only needed if you want to use an S3-compatible service (like Cloudflare R2 or AWS S3) for file storage. **If you do not configure this, you must remove these variables entirely from your Portainer stack, otherwise the application will fail to start.**
+
+-   `S3_ACCESS_KEY_ID`: Your S3 access key.
+-   `S3_SECRET_ACCESS_KEY`: Your S3 secret key.
+-   `S3_ENDPOINT`: The endpoint URL of your S3 service.
+-   `S3_BUCKET`: The name of your S3 bucket.
+-   `S3_PUBLIC_DOMAIN`: The public-facing URL for accessing files in your bucket.
