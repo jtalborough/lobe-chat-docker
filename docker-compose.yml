@@ -22,9 +22,10 @@ services:
       - APP_URL=https://lobe-chat.designbuildautomate.io
       # Add your chosen SSO provider(s), e.g., 'github' or 'google,github'
       - NEXT_AUTH_SSO_PROVIDERS=${NEXT_AUTH_SSO_PROVIDERS}
-      # --- GitHub SSO Example ---
-      - AUTH_GITHUB_ID=${AUTH_GITHUB_ID}
-      - AUTH_GITHUB_SECRET=${AUTH_GITHUB_SECRET}
+      # --- Auth0 SSO --- 
+      - AUTH_AUTH0_ID=${AUTH_AUTH0_ID}
+      - AUTH_AUTH0_SECRET=${AUTH_AUTH0_SECRET}
+      - AUTH_AUTH0_ISSUER=${AUTH_AUTH0_ISSUER}
 
       # --- Access Control ---
       # Set to 1 to require authentication for all users, disabling guest access.
