@@ -39,8 +39,8 @@ services:
       - KEY_VAULTS_SECRET=${KEY_VAULTS_SECRET}
       - NODE_ENV=production
 
-    ports:
-      - "3000:3000" # Optional: if you want to access it locally
+    #ports:
+      #- "3000:3000" # Optional: if you want to access it locally
     networks:
       - lobechat_net
 
