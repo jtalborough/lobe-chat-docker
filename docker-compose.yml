@@ -2,47 +2,44 @@ version: '3.8'
 
 services:
   lobe-chat:
-    image: lobehub/lobe-chat:latest  # ✅ correct main image
+    image: lobehub/lobe-chat-database
     container_name: lobe-chat
     restart: always
     depends_on:
       - postgres-db
     environment:
-      # === LLM / API ===
+      # OpenAI API Key
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      # You can also use OPENAI_BASE_URL or OPENROUTER_API_KEY if needed
 
-      # === Database ===
+      # Database Connection
+      # The DATABASE_URL must use the service name 'postgres-db' as the host.
       - DATABASE_URL=postgres://postgres:${POSTGRES_PASSWORD}@postgres-db:5432/postgres
+      - KEY_VAULTS_SECRET=${KEY_VAULTS_SECRET}
 
-      # === Auth / Security ===
-      - ENABLE_AUTH_PROTECTION=1
-      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      # NextAuth Configuration for SSO
+      - NEXT_AUTH_SECRET=${NEXT_AUTH_SECRET}
       - NEXTAUTH_URL=https://lobe-chat.designbuildautomate.io/api/auth
       - APP_URL=https://lobe-chat.designbuildautomate.io
-      - ACCESS_CODE=${ACCESS_CODE}
+      # Add your chosen SSO provider(s), e.g., 'github' or 'google,github'
       - NEXT_AUTH_SSO_PROVIDERS=${NEXT_AUTH_SSO_PROVIDERS}
+      # --- Auth0 SSO --- 
       - AUTH_AUTH0_ID=${AUTH_AUTH0_ID}
       - AUTH_AUTH0_SECRET=${AUTH_AUTH0_SECRET}
       - AUTH_AUTH0_ISSUER=${AUTH_AUTH0_ISSUER}
 
-      # === Optional: R2 Storage Integration ===
-      - STORAGE_TYPE=s3
-      - S3_ENDPOINT=https://f3bc5d66554370eefda668ff5aa3aae2.r2.cloudflarestorage.com
-      - S3_BUCKET=lobe-chat
-      - S3_ACCESS_KEY_ID=${R2_ACCESS_KEY_ID}
-      - S3_SECRET_ACCESS_KEY=${R2_SECRET_ACCESS_KEY}
-      - S3_REGION=auto
-      - S3_PUBLIC_DOMAIN=${S3_PUBLIC_DOMAIN}
+      # --- Access Control ---
+      # Set to 1 to require authentication for all users, disabling guest access.
+      - ENABLE_AUTH_PROTECTION=1
+      # Provide a comma-separated list of codes. New users will be prompted for a 
+      # code after SSO login to gain access.
+      - ACCESS_CODE=${ACCESS_CODE}
 
-      # === Misc ===
-      - KEY_VAULTS_SECRET=${KEY_VAULTS_SECRET}
-      - NODE_ENV=production
-
-    #ports:
-      #- "3000:3000" # Optional: if you want to access it locally
-    networks:
-      - lobechat_net
+      # S3 Storage (placeholders to prevent startup error if not used)
+      - S3_ACCESS_KEY_ID=placeholder
+      - S3_SECRET_ACCESS_KEY=placeholder
+      - S3_ENDPOINT=http://localhost:9000
+      - S3_BUCKET=placeholder
+      - S3_PUBLIC_DOMAIN=http://localhost:9000
 
   postgres-db:
     image: pgvector/pgvector:pg16
@@ -54,8 +51,6 @@ services:
       - POSTGRES_DB=postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - lobechat_net
 
   cloudflared-lobechat:
     image: cloudflare/cloudflared:latest
@@ -64,12 +59,7 @@ services:
     command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
     depends_on:
       - lobe-chat
-    networks:
-      - lobechat_net
 
 volumes:
   postgres_data:
-
-networks:
-  lobechat_net:
-    driver: bridge
+ 
