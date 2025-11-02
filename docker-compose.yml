@@ -10,7 +10,7 @@ services:
     environment:
       # OpenAI API Key
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-
+      - DEBUG=lobe-oidc:*
       # Database Connection
       # The DATABASE_URL must use the service name 'postgres-db' as the host.
       - DATABASE_URL=postgres://postgres:${POSTGRES_PASSWORD}@postgres-db:5432/postgres
