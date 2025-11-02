@@ -28,6 +28,10 @@ services:
       - AUTH_AUTH0_ISSUER=${AUTH_AUTH0_ISSUER}
 
 
+      # --- OIDC for Desktop App Sync ---
+      - ENABLE_OIDC=1
+      - OIDC_JWKS_KEY=${OIDC_JWKS_KEY}
+
       # --- Access Control ---
       # Set to 1 to require authentication for all users, disabling guest access.
       - ENABLE_AUTH_PROTECTION=1
