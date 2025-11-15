@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   lobe-chat:
-    image: lobehub/lobe-chat-database:latest
+    image: lobehub/lobehub:latest
     container_name: lobe-chat
     restart: always
     depends_on:
