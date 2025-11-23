@@ -27,7 +27,7 @@ services:
       - AUTH_AUTH0_SECRET=${AUTH_AUTH0_SECRET}
       - AUTH_AUTH0_ISSUER=${AUTH_AUTH0_ISSUER}
 
-
+      - FEATURE_FLAGS =+group_chat
       # --- OIDC for Desktop App Sync ---
       - ENABLE_OIDC=1
       - OIDC_JWKS_KEY=${OIDC_JWKS_KEY}
@@ -65,6 +65,14 @@ services:
     command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
     depends_on:
       - lobe-chat
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 300 lobe-chat
 
 volumes:
   postgres_data:
