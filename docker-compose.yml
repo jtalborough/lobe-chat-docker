@@ -27,7 +27,7 @@ services:
       - AUTH_AUTH0_SECRET=${AUTH_AUTH0_SECRET}
       - AUTH_AUTH0_ISSUER=${AUTH_AUTH0_ISSUER}
 
-      - FEATURE_FLAGS =+group_chat
+      - FEATURE_FLAGS=+group_chat
       # --- OIDC for Desktop App Sync ---
       - ENABLE_OIDC=1
       - OIDC_JWKS_KEY=${OIDC_JWKS_KEY}
